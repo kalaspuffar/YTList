@@ -11,8 +11,10 @@ import java.util.List;
 import org.ea.utils.DatabaseHelper;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -43,13 +45,14 @@ public class VideoUpdater extends AsyncTask<Object, List<String>, Object> {
 	}
 
 	@Override
-	protected Long doInBackground(Object... params) {
-		if(allReadyRunning) return Long.valueOf("0");
+	protected String doInBackground(Object... params) {
+		if(allReadyRunning) return "";
 		dh = DatabaseHelper.get(mla.getContext());
 		SQLiteDatabase db = dh.open();
         List<String> videoIds = new ArrayList<String>(); 
         
-		long numOfUpdated = 0;
+		long numUpdated = 0;
+		long numFetched = 0;
         try {
 			Cursor c = db.rawQuery("select videoId from "+DatabaseHelper.TABLE_VIDEOS+ ";", null);
 			while(c.moveToNext()) {
@@ -64,6 +67,8 @@ public class VideoUpdater extends AsyncTask<Object, List<String>, Object> {
             	values = new ContentValues();
                 String videoId = entry.path("id").path("$t").asText();                
                 videoId = videoId.substring(videoId.lastIndexOf("/")+1);
+                
+                numFetched++;
                 
                 if(videoIds.contains(videoId)) continue;
                 
@@ -81,15 +86,22 @@ public class VideoUpdater extends AsyncTask<Object, List<String>, Object> {
     					db = dh.open();
     				}
     				db.insertOrThrow(DatabaseHelper.TABLE_VIDEOS, null, values);
-    				numOfUpdated++;
+    				numUpdated++;
     			}
             }
 		} catch (Exception e) {
 			Log.e(VideoUpdater.class.getName(), "Exception", e);
 		}							
 
-		db.close();		
-		return numOfUpdated;	
+		db.close();
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("Updated videos. New/Fetched (");
+		sb.append(numUpdated);
+		sb.append("/");
+		sb.append(numFetched);
+		sb.append(")");
+		return sb.toString();	
 	}	
 	
 	
@@ -127,6 +139,25 @@ public class VideoUpdater extends AsyncTask<Object, List<String>, Object> {
 			dialog.dismiss();
 			dialog = null;
 		}
+		
+		if(numOfUpdated instanceof String && !((String)numOfUpdated).isEmpty()) {
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(act);
+	 
+			// set title
+			alertDialogBuilder.setTitle("Status");
+	 
+				// set dialog message
+			alertDialogBuilder.setMessage((String)numOfUpdated)
+				.setCancelable(false)
+				.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						dialog.cancel();					
+					}
+				  }); 
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+		}
+		
 	}
 
 	@Override
