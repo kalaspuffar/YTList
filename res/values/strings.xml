@@ -3,6 +3,7 @@
 
     <string name="app_name">YTList</string>
     <string name="action_settings">Settings</string>
+    <string name="action_watched_switch">Watched</string>    
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_main">YT - Sane</string>
     <string name="watched_button">Watched</string>

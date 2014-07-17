@@ -29,7 +29,8 @@ public class MainListAdapter extends ArrayAdapter<String> {
 
 	private final Activity activity;
 	private DatabaseHelper dh = null;
-
+	private boolean showWatched = false;
+	
 	public MainListAdapter(Activity activity, String[] values) {
 		super(activity.getApplicationContext(), R.layout.videoitem, values);
 		dh = DatabaseHelper.get(activity.getApplicationContext());
@@ -44,7 +45,7 @@ public class MainListAdapter extends ArrayAdapter<String> {
 
 		SQLiteDatabase db = dh.open();
 		Cursor c = db.rawQuery("select * from " + DatabaseHelper.TABLE_VIDEOS
-				+ " where watched = 0 order by published desc;", null);
+				+ " where watched "+getShowWatchedString()+" 0 order by published desc;", null);
 
 		while (c.moveToNext()) {
 			View rowView = inflater.inflate(R.layout.videoitem, parent, false);
@@ -69,11 +70,15 @@ public class MainListAdapter extends ArrayAdapter<String> {
 			imageBitmap = null;
 
 			Button watchedButton = (Button) rowView.findViewById(R.id.watchedButton);
+			
+			watchedButton.setText(this.isShowWatched() ? "Set as new" : "Watched");
+			
 			watchedButton.setOnClickListener(new View.OnClickListener() {
 	            public void onClick(View v) {
 	        		SQLiteDatabase db = dh.open();
 	        		ContentValues values = new ContentValues();
-	    			values.put("watched", System.currentTimeMillis());	            	
+	    			
+	        		values.put("watched", (isShowWatched() ? 0l : System.currentTimeMillis()));            	
 	            	db.update(DatabaseHelper.TABLE_VIDEOS, values, "videoId = ?", new String[] {videoId});
 	            	db.close();
 	            	notifyDataSetChanged();
@@ -97,7 +102,7 @@ public class MainListAdapter extends ArrayAdapter<String> {
 		int size = 0;
 		if (views == null) {
 			SQLiteDatabase db = dh.open();
-			Cursor c = db.rawQuery("select count(*) from " + DatabaseHelper.TABLE_VIDEOS + " where watched = 0;", null);
+			Cursor c = db.rawQuery("select count(*) from " + DatabaseHelper.TABLE_VIDEOS + " where watched "+getShowWatchedString()+" 0;", null);
 			c.moveToFirst();
 			size = c.getInt(0);
 			db.close();
@@ -105,6 +110,18 @@ public class MainListAdapter extends ArrayAdapter<String> {
 			size = views.size();
 		}
 		return size;
+	}
+	
+	public String getShowWatchedString() {
+		return isShowWatched() ? "!=" : "=";
+	}
+	
+	public boolean isShowWatched() {
+		return showWatched;
+	}
+
+	public void setShowWatched(boolean showWatched) {
+		this.showWatched = showWatched;
 	}
 
 	@Override

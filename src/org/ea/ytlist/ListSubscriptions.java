@@ -73,6 +73,13 @@ public class ListSubscriptions extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.list_subscriptions, menu);
+        
+        for(int i = 0; i < menu.size(); i++) {
+            if(menu.getItem(i).getTitle().toString().equalsIgnoreCase("Watched")) {
+            	menu.getItem(i).setOnMenuItemClickListener(new WatchSwitch(this.mla));
+            }        	
+        }
+        
         return true;
     }
     
