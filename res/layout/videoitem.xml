@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rowLine"
+    android:orientation="vertical"
+	android:background="@drawable/list_row_bg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    
+	<LinearLayout 
+	    android:orientation="horizontal"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content">
+	    
+	    <ImageView 
+	        android:id="@+id/videoImage"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:contentDescription="@string/image_desc"
+	        />
+	    
+	    <Button 
+	        android:id="@+id/watchedButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/watched_button"
+	        android:background="@drawable/button"
+	        style="@style/button_text"
+	        android:layout_gravity="top"
+	        />
+	</LinearLayout>
+    
+    <TextView
+        android:id="@+id/videoName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/listTextColor"
+        android:textSize="14sp"
+        android:text="" />    
+    
+    <TextView
+        android:id="@+id/videoDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/listTextColor"
+        android:textSize="8sp"      
+       android:typeface="monospace"        
+       android:text="" />    
+    
+</LinearLayout>

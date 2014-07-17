@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    
+	<RelativeLayout
+	    android:orientation="horizontal"
+	    android:layout_width="match_parent"
+	    android:layout_height="100px"
+	    android:background="#EDEDED" >
+	
+	    <ImageView
+	        android:id="@+id/newsImage"
+	        android:layout_width="100px"
+	    	android:layout_height="100px"
+	        android:scaleType="fitXY"
+			android:layout_centerVertical="true"
+	 		android:layout_gravity="left"        
+	        android:src="@drawable/news" />
+	
+	    <TextView
+	        android:id="@+id/title"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:paddingLeft="5dp"
+			android:layout_centerVertical="true"
+	        android:textColor="@color/listTextColor"
+	        android:text="@string/title_activity_main"
+	        android:layout_toRightOf="@id/newsImage"
+	        android:textSize="20sp"/>
+	
+		<android.support.v7.app.MediaRouteButton
+			android:id="@+id/media_route_button"
+			android:mediaRouteTypes="user"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:visibility="visible" />	    
+	    
+	    <ImageButton
+	        android:id="@+id/reloadImage"
+	        android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+	        android:layout_width="100px"
+	    	android:layout_height="100px"
+	        android:scaleType="fitXY"
+	 		android:layout_gravity="right"        
+	   		android:clickable="true"
+	    	android:src="@drawable/reload" />	           
+	</RelativeLayout>
+</FrameLayout>
