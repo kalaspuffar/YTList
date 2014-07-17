@@ -2,9 +2,6 @@ package org.ea.ytlist;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.media.MediaControlIntent;
-import android.support.v7.media.MediaRouteSelector;
-import android.support.v7.media.MediaRouter;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,7 +37,7 @@ public class ListSubscriptions extends Activity {
 			}        	
         });		
         
-        
+/*        
         MediaRouteSelector mediaSelector = new MediaRouteSelector.Builder()
         .addControlCategory(MediaControlIntent.CATEGORY_LIVE_VIDEO)
         .addControlCategory(MediaControlIntent.CATEGORY_REMOTE_PLAYBACK)
@@ -50,7 +47,7 @@ public class ListSubscriptions extends Activity {
         
 		MediaRouter router = MediaRouter.getInstance(this.getApplicationContext());
 		router.addCallback(mediaSelector, new MyMediaRouterCallback(), MediaRouter.CALLBACK_FLAG_REQUEST_DISCOVERY);
-
+*/
         
 		if(savedInstanceState == null && this.nu == null) {
 			this.nu = new VideoUpdater(this, mla);

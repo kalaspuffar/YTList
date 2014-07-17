@@ -1,5 +1,6 @@
 package org.ea.ytlist;
 
+/*
 import android.support.v7.media.MediaRouter;
 import android.support.v7.media.MediaRouter.Callback;
 import android.support.v7.media.MediaRouter.ProviderInfo;
@@ -72,3 +73,4 @@ public class MyMediaRouterCallback extends Callback {
 		super.onRouteVolumeChanged(router, route);
 	}
 }
+*/
