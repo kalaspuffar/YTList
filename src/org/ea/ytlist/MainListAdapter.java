@@ -30,6 +30,9 @@ public class MainListAdapter extends ArrayAdapter<String> {
 	private final Activity activity;
 	private DatabaseHelper dh = null;
 	private boolean showWatched = false;
+
+
+	private int mRouteCount = 0;	
 	
 	public MainListAdapter(Activity activity, String[] values) {
 		super(activity.getApplicationContext(), R.layout.videoitem, values);
@@ -134,5 +137,5 @@ public class MainListAdapter extends ArrayAdapter<String> {
 	public void notifyDataSetChanged() {
 		super.notifyDataSetChanged();
 		views = null;
-	}
+	}	
 }
